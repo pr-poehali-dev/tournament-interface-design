@@ -7,8 +7,8 @@ const TEAMS = {
     tag: "NW",
     score: 11,
     players: [
-      { id: 1, name: "Shadowbyte", role: "IGL", kills: 24, rating: 1.42 },
-      { id: 2, name: "Vortex", role: "AWP", kills: 18, rating: 1.28 },
+      { id: 1, name: "Shadowbyte", role: "IGL", kills: 24, rating: 1.42, flag: "🇷🇺" },
+      { id: 2, name: "Vortex", role: "AWP", kills: 18, rating: 1.28, flag: "🇺🇦" },
     ],
   },
   right: {
@@ -16,22 +16,13 @@ const TEAMS = {
     tag: "CE",
     score: 9,
     players: [
-      { id: 3, name: "Phantom_X", role: "Entry", kills: 21, rating: 1.35 },
-      { id: 4, name: "Ironclad", role: "Support", kills: 15, rating: 1.19 },
+      { id: 3, name: "Phantom_X", role: "Entry", kills: 21, rating: 1.35, flag: "🇩🇰" },
+      { id: 4, name: "Ironclad", role: "Support", kills: 15, rating: 1.19, flag: "🇸🇪" },
     ],
   },
 };
 
-const INITIAL_MESSAGES = [
-  { id: 1, user: "GhostFrag", color: "#f4a323", text: "NEON идут!!!" },
-  { id: 2, user: "Стример228", color: "#8a8d96", text: "Crimson возьмут эту карту, верю" },
-  { id: 3, user: "CyberFan", color: "#4a9eff", text: "Shadowbyte монстр сегодня 🔥" },
-  { id: 4, user: "xXxN00bSlayer", color: "#8a8d96", text: "ez для NW как обычно" },
-  { id: 5, user: "TurboViewer", color: "#f4a323", text: "какой AWP! Vortex зверь" },
-  { id: 6, user: "Анонимус", color: "#4a4d57", text: "оба тима топ, интересный матч" },
-  { id: 7, user: "ProGamer_RU", color: "#4a9eff", text: "Phantom_X тоже не сдаётся!" },
-  { id: 8, user: "WatchDog99", color: "#8a8d96", text: "map 2 будет горячей" },
-];
+
 
 function StatBadge({ label, value, highlight = false }: { label: string; value: number | string; highlight?: boolean }) {
   return (
@@ -52,14 +43,6 @@ const leftPct = Math.round((TEAMS.left.score / total) * 100);
 const Index = () => {
   const [leftPlayer, setLeftPlayer] = useState(TEAMS.left.players[0]);
   const [rightPlayer, setRightPlayer] = useState(TEAMS.right.players[0]);
-  const [chatInput, setChatInput] = useState("");
-  const [messages, setMessages] = useState(INITIAL_MESSAGES);
-
-  const sendMessage = () => {
-    if (!chatInput.trim()) return;
-    setMessages((prev) => [...prev, { id: prev.length + 1, user: "Вы", color: "#f4a323", text: chatInput.trim() }]);
-    setChatInput("");
-  };
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--bg-deep)", fontFamily: "'Barlow', sans-serif" }}>
@@ -194,7 +177,10 @@ const Index = () => {
                     style={{ background: leftPlayer.id === p.id ? undefined : "rgba(255,255,255,0.02)", border: `1px solid ${leftPlayer.id === p.id ? "var(--accent-orange)" : "var(--border-subtle)"}`, textAlign: "left" }}
                     onClick={() => setLeftPlayer(p)}
                   >
-                    <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", color: leftPlayer.id === p.id ? "var(--accent-orange)" : "var(--text-primary)", letterSpacing: "0.05em", textTransform: "uppercase" }}>{p.name}</div>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", color: leftPlayer.id === p.id ? "var(--accent-orange)" : "var(--text-primary)", letterSpacing: "0.05em", textTransform: "uppercase" }}>{p.name}</div>
+                      <span style={{ fontSize: "14px", lineHeight: 1 }}>{p.flag}</span>
+                    </div>
                     <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 500 }}>{p.role}</div>
                   </button>
                 ))}
@@ -232,7 +218,10 @@ const Index = () => {
                     style={{ background: rightPlayer.id === p.id ? undefined : "rgba(255,255,255,0.02)", border: `1px solid ${rightPlayer.id === p.id ? "rgba(255,255,255,0.3)" : "var(--border-subtle)"}`, textAlign: "left" }}
                     onClick={() => setRightPlayer(p)}
                   >
-                    <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", color: rightPlayer.id === p.id ? "var(--text-primary)" : "rgba(255,255,255,0.45)", letterSpacing: "0.05em", textTransform: "uppercase" }}>{p.name}</div>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", color: rightPlayer.id === p.id ? "var(--text-primary)" : "rgba(255,255,255,0.45)", letterSpacing: "0.05em", textTransform: "uppercase" }}>{p.name}</div>
+                      <span style={{ fontSize: "14px", lineHeight: 1 }}>{p.flag}</span>
+                    </div>
                     <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 500 }}>{p.role}</div>
                   </button>
                 ))}
@@ -241,43 +230,7 @@ const Index = () => {
           </div>
         </div>
 
-        {/* CHAT */}
-        <div style={{ width: "272px", marginLeft: "10px", display: "flex", flexDirection: "column", background: "var(--bg-panel)", border: "1px solid var(--border-subtle)", borderRadius: 4, overflow: "hidden" }}>
-          <div style={{ padding: "11px 14px", borderBottom: "1px solid var(--border-subtle)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-              <Icon name="MessageSquare" size={13} style={{ color: "var(--text-muted)" }} />
-              <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", letterSpacing: "0.1em", color: "var(--text-primary)", textTransform: "uppercase" }}>Чат</span>
-            </div>
-            <div style={{ padding: "2px 7px", background: "var(--bg-elevated)", borderRadius: 2, fontSize: "11px", fontWeight: 600, color: "var(--text-muted)" }}>
-              12 847
-            </div>
-          </div>
 
-          <div style={{ flex: 1, overflowY: "auto", padding: "8px 4px", display: "flex", flexDirection: "column", gap: 1 }}>
-            {messages.map((msg) => (
-              <div key={msg.id} className="chat-msg" style={{ padding: "4px 10px", borderRadius: 3 }}>
-                <span style={{ fontWeight: 700, fontSize: "12px", color: msg.color, marginRight: 5 }}>{msg.user}</span>
-                <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", fontWeight: 400 }}>{msg.text}</span>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ padding: "10px", borderTop: "1px solid var(--border-subtle)", display: "flex", gap: 6 }}>
-            <input
-              value={chatInput}
-              onChange={(e) => setChatInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-              placeholder="Написать сообщение..."
-              style={{ flex: 1, background: "var(--bg-elevated)", border: "1px solid var(--border-subtle)", borderRadius: 3, padding: "7px 10px", fontSize: "13px", fontFamily: "'Barlow', sans-serif", color: "var(--text-primary)", outline: "none" }}
-            />
-            <button
-              onClick={sendMessage}
-              style={{ background: "var(--accent-orange)", border: "none", borderRadius: 3, padding: "7px 11px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}
-            >
-              <Icon name="Send" size={13} style={{ color: "#000" }} />
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );

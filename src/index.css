@@ -4,45 +4,50 @@
 
 @layer base {
   :root {
-    --background: 220 20% 4%;
-    --foreground: 0 0% 95%;
+    --background: 220 14% 8%;
+    --foreground: 0 0% 92%;
 
-    --card: 220 18% 7%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 12% 11%;
+    --card-foreground: 0 0% 92%;
 
-    --popover: 220 18% 7%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 220 12% 11%;
+    --popover-foreground: 0 0% 92%;
 
-    --primary: 165 100% 50%;
-    --primary-foreground: 220 20% 4%;
+    --primary: 25 95% 53%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 12%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 220 10% 15%;
+    --secondary-foreground: 0 0% 85%;
 
-    --muted: 220 15% 12%;
-    --muted-foreground: 220 10% 50%;
+    --muted: 220 10% 15%;
+    --muted-foreground: 220 8% 45%;
 
-    --accent: 320 100% 55%;
+    --accent: 25 95% 53%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 80% 55%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 14%;
-    --input: 220 15% 12%;
-    --ring: 165 100% 50%;
+    --border: 220 10% 16%;
+    --input: 220 10% 15%;
+    --ring: 25 95% 53%;
 
-    --radius: 2px;
+    --radius: 3px;
 
-    --neon-cyan: #00ffc8;
-    --neon-magenta: #ff0090;
-    --neon-orange: #ff6a00;
-    --team-left: #00ffc8;
-    --team-right: #ff0090;
-    --bg-deep: #05060a;
-    --bg-panel: #0a0d14;
-    --bg-card: #0d1119;
-    --border-glow: rgba(0, 255, 200, 0.15);
+    /* Faceit/sport palette */
+    --bg-deep: #0f1014;
+    --bg-panel: #16181e;
+    --bg-card: #1c1e26;
+    --bg-elevated: #22242d;
+    --team-left: #f4a323;
+    --team-right: #e8e8e8;
+    --accent-orange: #f4a323;
+    --accent-blue: #4a9eff;
+    --text-primary: #e8e8e8;
+    --text-secondary: #8a8d96;
+    --text-muted: #4a4d57;
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-mid: rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -60,136 +65,53 @@
   }
 }
 
-/* Scanlines effect */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.08) 2px,
-    rgba(0, 0, 0, 0.08) 4px
-  );
-  pointer-events: none;
-  z-index: 9999;
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
 }
-
-/* Neon glow utilities */
-.glow-cyan {
-  text-shadow:
-    0 0 10px var(--neon-cyan),
-    0 0 20px var(--neon-cyan),
-    0 0 40px var(--neon-cyan);
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
 }
-.glow-magenta {
-  text-shadow:
-    0 0 10px var(--neon-magenta),
-    0 0 20px var(--neon-magenta),
-    0 0 40px var(--neon-magenta);
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
 }
-.glow-box-cyan {
-  box-shadow:
-    0 0 15px rgba(0, 255, 200, 0.3),
-    inset 0 0 30px rgba(0, 255, 200, 0.03);
-}
-.glow-box-magenta {
-  box-shadow:
-    0 0 15px rgba(255, 0, 144, 0.3),
-    inset 0 0 30px rgba(255, 0, 144, 0.03);
-}
-
-/* Clip path for sharp corners */
-.clip-sharp {
-  clip-path: polygon(
-    0 0,
-    calc(100% - 12px) 0,
-    100% 12px,
-    100% 100%,
-    12px 100%,
-    0 calc(100% - 12px)
-  );
-}
-.clip-sharp-sm {
-  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
-}
-.clip-sharp-btn {
-  clip-path: polygon(
-    0 0,
-    calc(100% - 6px) 0,
-    100% 6px,
-    100% 100%,
-    6px 100%,
-    0 calc(100% - 6px)
-  );
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Video placeholder */
 .video-placeholder {
-  background: linear-gradient(135deg, #0a0d14 0%, #0d111a 50%, #080b11 100%);
+  background: linear-gradient(160deg, #16181e 0%, #13151a 60%, #0f1014 100%);
   position: relative;
   overflow: hidden;
 }
-.video-placeholder::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.01) 50%,
-    transparent 70%
-  );
-  animation: shimmer 3s infinite;
-}
 
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-/* Player selector */
+/* Player selector button */
 .player-btn {
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
   cursor: pointer;
+  border-radius: 3px;
 }
 .player-btn.active-left {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 255, 200, 0.15),
-    rgba(0, 255, 200, 0.05)
-  );
-  border-color: var(--neon-cyan) !important;
-  box-shadow: 0 0 20px rgba(0, 255, 200, 0.2);
+  background: rgba(244, 163, 35, 0.1);
+  border-color: var(--accent-orange) !important;
 }
 .player-btn.active-right {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 0, 144, 0.15),
-    rgba(255, 0, 144, 0.05)
-  );
-  border-color: var(--neon-magenta) !important;
-  box-shadow: 0 0 20px rgba(255, 0, 144, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.35) !important;
 }
-.player-btn:hover {
-  transform: translateY(-2px);
+.player-btn:hover:not(.active-left):not(.active-right) {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.14) !important;
 }
 
 /* Score digits */
 .score-digit {
-  font-family: "Orbitron", monospace;
-  font-weight: 900;
+  font-family: "Barlow Condensed", "Rajdhani", sans-serif;
+  font-weight: 800;
   line-height: 1;
-  position: relative;
 }
 
 /* Timer colon blink */
@@ -202,73 +124,23 @@ body::before {
     opacity: 1;
   }
   50% {
-    opacity: 0.2;
+    opacity: 0.25;
   }
 }
 
 /* Chat message animation */
 .chat-msg {
-  animation: slideIn 0.25s ease;
+  animation: slideIn 0.2s ease;
 }
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* Noise overlay */
-.noise {
-  position: relative;
-}
-.noise::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-deep);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 255, 200, 0.3);
-  border-radius: 0;
-}
-
-/* Border gradient */
-.border-gradient-left {
-  border: 1px solid transparent;
-  background-clip: padding-box;
-  position: relative;
-}
-.border-gradient-left::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  background: linear-gradient(135deg, var(--neon-cyan), transparent 60%);
-  z-index: -1;
-  clip-path: polygon(
-    0 0,
-    calc(100% - 12px) 0,
-    100% 12px,
-    100% 100%,
-    12px 100%,
-    0 calc(100% - 12px)
-  );
-}
-.border-gradient-right::before {
-  background: linear-gradient(135deg, transparent 40%, var(--neon-magenta));
 }
 
 /* Live badge pulse */
@@ -279,15 +151,27 @@ body::before {
   0%,
   100% {
     opacity: 1;
-    box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
   }
   50% {
-    opacity: 0.8;
-    box-shadow: 0 0 18px rgba(255, 0, 0, 0.9);
+    opacity: 0.7;
   }
 }
 
-/* Map/round info */
-.divider-slash {
-  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+/* Thin top accent line */
+.accent-line-left {
+  border-top: 2px solid var(--accent-orange);
+}
+.accent-line-right {
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Team score bar progress */
+.score-bar {
+  transition: width 0.4s ease;
+}
+
+/* Input focus */
+input:focus {
+  border-color: rgba(244, 163, 35, 0.4) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
 }
